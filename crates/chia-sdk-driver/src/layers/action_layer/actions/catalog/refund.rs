@@ -4,7 +4,7 @@ use chia_sdk_types::{
     announcement_id,
     puzzles::{
         CatalogOtherPrecommitData, CatalogRefundActionArgs, CatalogRefundActionSolution,
-        CatalogSlotValue, DefaultCatMakerArgs, PrecommitSpendMode, PuzzleHashPuzzleAndSolution,
+        CatalogSlotValue, DefaultCatMakerArgs, PrecommitSpendMode, PuzzleAndSolution,
         SlotNeigborsInfo,
     },
     Conditions, Mod,
@@ -127,8 +127,12 @@ impl CatalogRefundAction {
         // then, create action spend
         let cat_maker_args = DefaultCatMakerArgs::new(precommit_coin.asset_id.tree_hash().into());
         let action_solution = CatalogRefundActionSolution {
-            precommited_cat_maker_and_solution: PuzzleHashPuzzleAndSolution::new(
-                cat_maker_args.curry_tree_hash().into(),
+            // precommited_cat_maker_and_solution: PuzzleHashPuzzleAndSolution::new(
+            //     cat_maker_args.curry_tree_hash().into(),
+            //     ctx.curry(cat_maker_args)?,
+            //     (),
+            // ),
+            precommited_cat_maker_and_solution: PuzzleAndSolution::new(
                 ctx.curry(cat_maker_args)?,
                 (),
             ),

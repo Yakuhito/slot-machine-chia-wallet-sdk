@@ -5,45 +5,44 @@ use clvm_traits::{FromClvm, ToClvm};
 use clvm_utils::TreeHash;
 use hex_literal::hex;
 
-use crate::{puzzles::SlotNeigborsInfo, Mod};
+use crate::{
+    puzzles::{PuzzleAndSolution, SlotNeigborsInfo},
+    Mod,
+};
 
-pub const CATALOG_REFUND_PUZZLE: [u8; 914] = hex!(
+pub const CATALOG_REFUND_PUZZLE: [u8; 783] = hex!(
     "
-    ff02ffff01ff02ffff03ffff09ff4fffff02ff2effff04ff02ffff04ff81afff
-    8080808080ffff01ff04ff17ffff02ff16ffff04ff02ffff04ff0bffff04ffff
-    02ff2effff04ff02ffff04ffff04ff819fff81ff80ff80808080ffff04ffff22
-    ffff09ff77ff81bf80ffff09ff4fff578080ffff04ffff04ffff04ff28ffff04
-    ffff0effff0124ffff02ff2effff04ff02ffff04ffff04ff819fff82015f80ff
-    8080808080ff808080ffff04ffff04ff38ffff04ffff0113ffff04ff80ffff04
-    ffff02ff81afffff04ffff02ff2affff04ff02ffff04ff05ffff04ff8201dfff
-    ff04ffff0bffff0102ff819fffff0bffff0101ffff02ff2effff04ff02ffff04
-    ffff04ff82015fffff04ff4fff81ef8080ff808080808080ff808080808080ff
-    81ef8080ffff04ff81bfff808080808080ff808080ff8080808080808080ffff
-    01ff088080ff0180ffff04ffff01ffffff33ff3e42ff02ffff02ffff03ff05ff
-    ff01ff0bff81fcffff02ff3affff04ff02ffff04ff09ffff04ffff02ff2cffff
-    04ff02ffff04ff0dff80808080ff808080808080ffff0181dc80ff0180ffffa0
-    4bf5122f344554c53bde2ebb8cd2b7e3d1600ad631c385a5d7cce23c7785459a
-    a09dcf97a184f32623d11a73124ceb99a5709b083721e878a16d78f596718ba7
-    b2ffa102a12871fee210fb8619291eaea194581cbd2531e4b23759d225f68069
-    23f63222a102a8d5dd63fba471ebcb1f3e8f7c1e1879b7152a6e7298a91ce119
-    a63400ade7c5ffffff04ff10ffff04ffff02ff2affff04ff02ffff04ff05ffff
-    04ffff0bffff0101ff0b80ff8080808080ffff04ff80ffff04ffff04ff05ff80
-    80ff8080808080ffff0bff81bcffff02ff3affff04ff02ffff04ff05ffff04ff
-    ff02ff2cffff04ff02ffff04ff07ff80808080ff808080808080ff0bff14ffff
-    0bff14ff81dcff0580ffff0bff14ff0bff819c8080ffff02ffff03ff17ffff01
-    ff04ffff02ff3effff04ff02ffff04ff05ffff04ff0bff8080808080ffff04ff
-    ff02ff12ffff04ff02ffff04ff05ffff04ff0bff8080808080ff2f8080ffff01
-    2f80ff0180ffff02ffff03ffff07ff0580ffff01ff0bffff0102ffff02ff2eff
-    ff04ff02ffff04ff09ff80808080ffff02ff2effff04ff02ffff04ff0dff8080
-    808080ffff01ff0bffff0101ff058080ff0180ff04ff38ffff04ffff0112ffff
-    04ff80ffff04ffff02ff2affff04ff02ffff04ff05ffff04ffff0bffff0101ff
-    0b80ff8080808080ff8080808080ff018080
+    ff02ffff01ff02ffff01ff02ffff01ff04ff5fffff02ffff03ffff02ffff03ff
+    ff09ff8201dfff8202ff80ffff01ff02ffff03ffff09ff82015fff0580ffff01
+    ff0101ffff018080ff0180ffff018080ff0180ffff01ff02ffff01ff04ffff04
+    ffff0142ffff04ffff0112ffff04ff80ffff04ffff02ff57ffff04ff81b7ffff
+    04ff5fffff04ffff0bffff0101ff0280ff8080808080ff8080808080ffff04ff
+    ff02ff81f7ffff04ffff04ff57ff81b780ffff04ff5fff02808080ff058080ff
+    ff04ffff02ff13ffff04ff13ffff04ff82027fff8203ff808080ff018080ffff
+    010280ff018080ffff04ffff04ffff04ffff013effff04ffff0effff0124ffff
+    02ff09ffff04ff09ffff04ff82013fff8202bf80808080ff808080ffff04ffff
+    04ffff0142ffff04ffff0113ffff04ff80ffff04ffff02ff819fffff04ffff02
+    ff15ffff04ff2dffff04ff0bffff04ff8203bfffff04ffff0bffff0102ff8201
+    3fffff0bffff0101ffff02ff09ffff04ff09ffff04ff8202bfffff04ff02ff81
+    df808080808080ff808080808080ff81df8080ffff04ff82017fff8080808080
+    80ff808080ff018080ffff04ffff02ff04ffff04ff04ff4f8080ff018080ffff
+    04ffff04ffff01ff02ffff03ffff07ff0380ffff01ff0bffff0102ffff02ff02
+    ffff04ff02ff058080ffff02ff02ffff04ff02ff07808080ffff01ff0bffff01
+    01ff038080ff0180ffff04ffff01ff0bffff0102ffff0bffff0182010280ffff
+    0bffff0102ffff0bffff0102ffff0bffff0182010180ff0580ffff0bffff0102
+    ffff02ff02ffff04ff02ff078080ffff0bffff010180808080ffff04ffff01ff
+    02ffff03ff03ffff01ff0bffff0102ffff0bffff0182010480ffff0bffff0102
+    ffff0bffff0102ffff0bffff0182010180ff0580ffff0bffff0102ffff02ff02
+    ffff04ff02ff078080ffff0bffff010180808080ffff01ff0bffff0182010180
+    80ff0180ffff01ff04ffff0133ffff04ffff02ff04ffff04ff06ffff04ff05ff
+    ff04ffff0bffff0101ff0780ff8080808080ffff04ff80ffff04ffff04ff05ff
+    8080ff8080808080808080ff018080
     "
 );
 
 pub const CATALOG_REFUND_PUZZLE_HASH: TreeHash = TreeHash::new(hex!(
     "
-    7073bdb00158fb9cfbac3b6121760bc052d1b099f28deebf61c60ea688b13319
+    32ee4e502a03f0f9fda91e547c4ced0023bd86543aa1fcac15afbb31ecd52fc0
     "
 ));
 
@@ -99,7 +98,8 @@ impl CatalogOtherPrecommitData {
 #[derive(FromClvm, ToClvm, Debug, Clone, PartialEq, Eq)]
 #[clvm(list)]
 pub struct CatalogRefundActionSolution<P, S> {
-    pub precommited_cat_maker_and_solution: PuzzleHashPuzzleAndSolution<P, S>,
+    // pub precommited_cat_maker_and_solution: PuzzleHashPuzzleAndSolution<P, S>,
+    pub precommited_cat_maker_and_solution: PuzzleAndSolution<P, S>,
     pub other_precommit_data: CatalogOtherPrecommitData,
     pub precommit_amount: u64,
     #[clvm(rest)]
