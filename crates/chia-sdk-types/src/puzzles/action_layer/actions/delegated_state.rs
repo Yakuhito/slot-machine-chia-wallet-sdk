@@ -9,27 +9,26 @@ use hex_literal::hex;
 
 use crate::Mod;
 
-pub const DELEGATED_STATE_ACTION_PUZZLE: [u8; 395] = hex!(
+pub const DELEGATED_STATE_ACTION_PUZZLE: [u8; 341] = hex!(
+    // Rue
     "
-    ff02ffff01ff04ffff04ff27ff2f80ffff04ffff04ff08ffff04ffff0112ffff
-    04ffff0effff0173ffff02ff0effff04ff02ffff04ff2fff8080808080ffff04
-    ffff0bff2affff0bff0cffff0bff0cff32ff0580ffff0bff0cffff0bff3affff
-    0bff0cffff0bff0cff32ff0b80ffff0bff0cffff0bff3affff0bff0cffff0bff
-    0cff32ff3f80ffff0bff0cff32ff22808080ff22808080ff22808080ff808080
-    8080ff808080ffff04ffff01ffff4302ffffffa04bf5122f344554c53bde2ebb
-    8cd2b7e3d1600ad631c385a5d7cce23c7785459aa09dcf97a184f32623d11a73
-    124ceb99a5709b083721e878a16d78f596718ba7b2ffa102a12871fee210fb86
-    19291eaea194581cbd2531e4b23759d225f6806923f63222a102a8d5dd63fba4
-    71ebcb1f3e8f7c1e1879b7152a6e7298a91ce119a63400ade7c5ff02ffff03ff
-    ff07ff0580ffff01ff0bffff0102ffff02ff0effff04ff02ffff04ff09ff8080
-    8080ffff02ff0effff04ff02ffff04ff0dff8080808080ffff01ff0bffff0101
-    ff058080ff0180ff018080
+    ff02ffff01ff04ffff04ff27ff2f80ffff04ffff04ffff0143ffff04ffff0112
+    ffff04ffff0effff0173ffff02ff04ffff04ff04ff2f808080ffff04ffff0bff
+    ff0102ffff0bffff0182010280ffff0bffff0102ffff0bffff0102ffff0bffff
+    0182010180ff0580ffff0bffff0102ffff02ff06ffff04ff06ffff04ff0bffff
+    04ff3fff8080808080ffff0bffff010180808080ff8080808080ff808080ffff
+    04ffff04ffff01ff02ffff03ffff07ff0380ffff01ff0bffff0102ffff02ff02
+    ffff04ff02ff058080ffff02ff02ffff04ff02ff07808080ffff01ff0bffff01
+    01ff038080ff0180ffff01ff02ffff03ff03ffff01ff0bffff0102ffff0bffff
+    0182010480ffff0bffff0102ffff0bffff0102ffff0bffff0182010180ff0580
+    ffff0bffff0102ffff02ff02ffff04ff02ff078080ffff0bffff010180808080
+    ffff01ff0bffff018201018080ff018080ff018080
     "
 );
 
 pub const DELEGATED_STATE_ACTION_PUZZLE_HASH: TreeHash = TreeHash::new(hex!(
     "
-    b58d77604a610116c93d22a886cf4c76bd79f212195bb0ea0782c39418be0ec7
+    491ee66c8ffd29ef41bf820d3d4d766deb1b6f650932af09f26f807dab1a362f
     "
 ));
 
