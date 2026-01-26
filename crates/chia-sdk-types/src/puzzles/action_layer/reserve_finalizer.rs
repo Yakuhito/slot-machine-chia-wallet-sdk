@@ -7,7 +7,7 @@ use hex_literal::hex;
 
 use crate::{puzzles::ACTION_LAYER_PUZZLE_HASH, Mod};
 
-pub const RESERVE_FINALIZER_PUZZLE: [u8; 751] = hex!(
+pub const RESERVE_FINALIZER_PUZZLE: [u8; 739] = hex!(
     // Rue
     "
     ff02ffff01ff02ffff01ff04ffff04ffff0133ffff04ffff02ff2dffff04ff3d
@@ -16,30 +16,30 @@ pub const RESERVE_FINALIZER_PUZZLE: [u8; 751] = hex!(
     ffff02ff15ffff04ff15ff8219ff8080ff80808080808080ffff04ffff0101ff
     ff04ffff04ff81bfff8080ff8080808080ffff04ffff04ffff0142ffff04ffff
     0117ffff04ffff02ff15ffff04ff15ffff04ffff0101ffff04ffff04ffff0133
-    ffff04ff2fffff04ffff02ff5fffff04ff8219ffff808080ffff04ffff04ff2f
-    ff8080ff8080808080ff0680808080ffff04ffff30ff8207ffff17ffff02ff5f
-    ffff04ff8206ffff80808080ff8080808080ff048080ffff04ffff02ff04ffff
-    04ff04ffff04ff80ffff04ff80ff8206ff80808080ff018080ffff04ffff04ff
-    ff01ff02ffff03ff17ffff01ff02ffff03ffff09ff47ffff0181d680ffff01ff
-    02ff02ffff04ff02ffff04ff05ffff04ffff04ff67ff0b80ffff04ff37ff1f80
-    80808080ffff01ff02ff02ffff04ff02ffff04ffff04ff67ff0580ffff04ff0b
-    ffff04ff37ff1f808080808080ff0180ffff01ff02ffff03ff1fffff01ff02ff
-    02ffff04ff02ffff04ff05ffff04ff0bff1f80808080ffff01ff04ff05ff0b80
-    80ff018080ff0180ffff04ffff01ff02ffff03ffff07ff0380ffff01ff0bffff
-    0102ffff02ff02ffff04ff02ff058080ffff02ff02ffff04ff02ff07808080ff
-    ff01ff0bffff0101ff038080ff0180ffff04ffff01ff0bffff0102ffff0bffff
-    0182010280ffff0bffff0102ffff0bffff0102ffff0bffff0182010180ff0580
-    ffff0bffff0102ffff02ff02ffff04ff02ff078080ffff0bffff010180808080
-    ffff01ff02ffff03ff03ffff01ff0bffff0102ffff0bffff0182010480ffff0b
-    ffff0102ffff0bffff0102ffff0bffff0182010180ff0580ffff0bffff0102ff
-    ff02ff02ffff04ff02ff078080ffff0bffff010180808080ffff01ff0bffff01
-    8201018080ff0180808080ff018080
+    ffff04ff2fffff04ffff02ff5fff8219ff80ffff04ffff04ff2fff8080ff8080
+    808080ff0680808080ffff04ffff30ff8207ffff17ffff02ff5fff8206ff8080
+    ff8080808080ff048080ffff04ffff02ff04ffff04ff04ffff04ff80ffff04ff
+    80ff8206ff80808080ff018080ffff04ffff04ffff01ff02ffff03ff17ffff01
+    ff02ffff03ffff09ff47ffff0181d680ffff01ff02ff02ffff04ff02ffff04ff
+    05ffff04ffff04ff67ff0b80ffff04ff37ff1f8080808080ffff01ff02ff02ff
+    ff04ff02ffff04ffff04ff27ff0580ffff04ff0bffff04ff37ff1f8080808080
+    80ff0180ffff01ff02ffff03ff1fffff01ff02ff02ffff04ff02ffff04ff05ff
+    ff04ff0bff1f80808080ffff01ff04ff05ff0b8080ff018080ff0180ffff04ff
+    ff01ff02ffff03ffff07ff0380ffff01ff0bffff0102ffff02ff02ffff04ff02
+    ff058080ffff02ff02ffff04ff02ff07808080ffff01ff0bffff0101ff038080
+    ff0180ffff04ffff01ff0bffff0102ffff0bffff0182010280ffff0bffff0102
+    ffff0bffff0102ffff0bffff0182010180ff0580ffff0bffff0102ffff02ff02
+    ffff04ff02ff078080ffff0bffff010180808080ffff01ff02ffff03ff03ffff
+    01ff0bffff0102ffff0bffff0182010480ffff0bffff0102ffff0bffff0102ff
+    ff0bffff0182010180ff0580ffff0bffff0102ffff02ff02ffff04ff02ff0780
+    80ffff0bffff010180808080ffff01ff0bffff018201018080ff0180808080ff
+    018080
     "
 );
 
 pub const RESERVE_FINALIZER_PUZZLE_HASH: TreeHash = TreeHash::new(hex!(
     "
-    c706430c3b133e70a78eb7dce5fd208c991840a0a88dd6f8aa69310008f39536
+    5b406eb66d10998027924c9bdea4254966e27ca765a8992227f826cb0e868095
     "
 ));
 
