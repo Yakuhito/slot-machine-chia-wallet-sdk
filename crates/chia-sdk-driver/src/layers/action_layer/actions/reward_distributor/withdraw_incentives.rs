@@ -1,4 +1,4 @@
-use chia_protocol::{Bytes, Bytes32};
+use chia_protocol::Bytes32;
 use chia_sdk_types::{
     puzzles::{
         RewardDistributorCommitmentSlotValue, RewardDistributorRewardSlotValue,
@@ -11,8 +11,8 @@ use clvm_utils::{ToTreeHash, TreeHash};
 use clvmr::NodePtr;
 
 use crate::{
-    DriverError, RewardDistributor, RewardDistributorConstants, SingletonAction, Slot, Spend,
-    SpendContext,
+    DriverError, RewardDistributor, RewardDistributorConstants,
+    RewardDistributorReceivedMessagePrefix, SingletonAction, Slot, Spend, SpendContext,
 };
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -123,7 +123,11 @@ impl RewardDistributorWithdrawIncentivesAction {
         let withdraw_incentives_conditions = Conditions::new()
             .send_message(
                 18,
-                Bytes::new(Vec::new()),
+                RewardDistributorReceivedMessagePrefix::withdraw_incentives(
+                    reward_slot.info.value.epoch_start,
+                    commitment_slot.info.value.rewards,
+                )
+                .into(),
                 vec![ctx.alloc(&distributor.coin.puzzle_hash)?],
             )
             .assert_concurrent_puzzle(commitment_slot.coin.puzzle_hash);

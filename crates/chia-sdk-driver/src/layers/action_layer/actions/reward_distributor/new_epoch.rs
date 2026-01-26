@@ -11,8 +11,8 @@ use clvm_utils::{ToTreeHash, TreeHash};
 use clvmr::NodePtr;
 
 use crate::{
-    DriverError, RewardDistributor, RewardDistributorConstants, SingletonAction, Slot, Spend,
-    SpendContext,
+    DriverError, RewardDistributor, RewardDistributorConstants,
+    RewardDistributorCreatedAnnouncementPrefix, SingletonAction, Slot, Spend, SpendContext,
 };
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -21,6 +21,7 @@ pub struct RewardDistributorNewEpochAction {
     pub fee_payout_puzzle_hash: Bytes32,
     pub fee_bps: u64,
     pub epoch_seconds: u64,
+    pub precision: u64,
 }
 
 impl ToTreeHash for RewardDistributorNewEpochAction {
@@ -30,6 +31,7 @@ impl ToTreeHash for RewardDistributorNewEpochAction {
             self.fee_payout_puzzle_hash,
             self.fee_bps,
             self.epoch_seconds,
+            self.precision,
         )
         .curry_tree_hash()
     }
@@ -42,6 +44,7 @@ impl SingletonAction<RewardDistributor> for RewardDistributorNewEpochAction {
             fee_payout_puzzle_hash: constants.fee_payout_puzzle_hash,
             fee_bps: constants.fee_bps,
             epoch_seconds: constants.epoch_seconds,
+            precision: constants.precision,
         }
     }
 }
@@ -52,6 +55,7 @@ impl RewardDistributorNewEpochAction {
         fee_payout_puzzle_hash: Bytes32,
         fee_bps: u64,
         epoch_seconds: u64,
+        precision: u64,
     ) -> RewardDistributorNewEpochActionArgs {
         RewardDistributorNewEpochActionArgs {
             reward_slot_1st_curry_hash: Slot::<()>::first_curry_hash(
@@ -62,6 +66,7 @@ impl RewardDistributorNewEpochAction {
             fee_payout_puzzle_hash,
             fee_bps,
             epoch_seconds,
+            precision,
         }
     }
 
@@ -71,6 +76,7 @@ impl RewardDistributorNewEpochAction {
             self.fee_payout_puzzle_hash,
             self.fee_bps,
             self.epoch_seconds,
+            self.precision,
         ))
     }
 
@@ -119,8 +125,9 @@ impl RewardDistributorNewEpochAction {
         let fee = epoch_total_rewards * distributor.info.constants.fee_bps / 10000;
 
         // calculate announcement needed to ensure everything's happening as expected
-        let mut new_epoch_announcement = my_state.round_time_info.epoch_end.tree_hash().to_vec();
-        new_epoch_announcement.insert(0, b'e');
+        let new_epoch_announcement = RewardDistributorCreatedAnnouncementPrefix::new_epoch(
+            my_state.round_time_info.epoch_end,
+        );
         let new_epoch_conditions = Conditions::new()
             .assert_puzzle_announcement(announcement_id(
                 distributor.coin.puzzle_hash,

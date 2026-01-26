@@ -1,11 +1,13 @@
 use chia_protocol::Bytes32;
 use chia_puzzle_types::singleton::SingletonStruct;
+use chia_puzzles::{SINGLETON_LAUNCHER_HASH, SINGLETON_TOP_LAYER_V1_1_HASH};
 use chia_sdk_types::{
     announcement_id,
     puzzles::{
-        DefaultCatMakerArgs, PrecommitSpendMode, SlotNeigborsInfo, XchandlesDataValue,
-        XchandlesFactorPricingPuzzleArgs, XchandlesPricingSolution, XchandlesRegisterActionArgs,
-        XchandlesRegisterActionSolution, XchandlesSlotValue,
+        DefaultCatMakerArgs, PrecommitSpendMode, PuzzleAndSolution, SlotNeigborsInfo,
+        XchandlesFactorPricingPuzzleArgs, XchandlesHandleSlotValue, XchandlesNewDataPuzzleHashes,
+        XchandlesOtherPrecommitData, XchandlesPricingSolution, XchandlesRegisterActionArgs,
+        XchandlesRegisterActionSolution, XchandlesRestOfSlot, XchandlesSlotNonce,
     },
     Conditions, Mod,
 };
@@ -16,6 +18,7 @@ use clvmr::NodePtr;
 use crate::{
     DriverError, PrecommitCoin, PrecommitLayer, SingletonAction, Slot, Spend, SpendContext,
     XchandlesConstants, XchandlesPrecommitValue, XchandlesRegistry,
+    XchandlesRegistryCreatedAnnouncementPrefix, XchandlesRegistryReceivedMessagePrefix,
 };
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -53,13 +56,19 @@ impl XchandlesRegisterAction {
         payout_puzzle_hash: Bytes32,
     ) -> XchandlesRegisterActionArgs {
         XchandlesRegisterActionArgs {
+            singleton_mod_hash: SINGLETON_TOP_LAYER_V1_1_HASH.into(),
+            singleton_launcher_puzzle_hash: SINGLETON_LAUNCHER_HASH.into(),
             precommit_1st_curry_hash: PrecommitLayer::<()>::first_curry_hash(
                 SingletonStruct::new(launcher_id).tree_hash().into(),
                 relative_block_height,
                 payout_puzzle_hash,
             )
             .into(),
-            slot_1st_curry_hash: Slot::<()>::first_curry_hash(launcher_id, 0).into(),
+            handle_slot_1st_curry_hash: Slot::<()>::first_curry_hash(
+                launcher_id,
+                XchandlesSlotNonce::HANDLE.to_u64(),
+            )
+            .into(),
         }
     }
 
@@ -74,7 +83,7 @@ impl XchandlesRegisterAction {
     pub fn spent_slot_values(
         ctx: &SpendContext,
         solution: NodePtr,
-    ) -> Result<[XchandlesSlotValue; 2], DriverError> {
+    ) -> Result<[XchandlesHandleSlotValue; 2], DriverError> {
         let solution = XchandlesRegisterActionSolution::<
             NodePtr,
             NodePtr,
@@ -84,21 +93,21 @@ impl XchandlesRegisterAction {
         >::from_clvm(ctx, solution)?;
 
         Ok([
-            XchandlesSlotValue::new(
+            XchandlesHandleSlotValue::new(
                 solution.neighbors.left_value,
-                solution.left_left_value,
+                solution.left_rest_of_slot.this_this_value,
                 solution.neighbors.right_value,
-                solution.left_expiration,
-                solution.left_data.owner_launcher_id,
-                solution.left_data.resolved_data,
+                solution.left_rest_of_slot.this_expiration,
+                solution.left_rest_of_slot.this_data.owner_launcher_id,
+                solution.left_rest_of_slot.this_data.resolved_launcher_id,
             ),
-            XchandlesSlotValue::new(
+            XchandlesHandleSlotValue::new(
                 solution.neighbors.right_value,
                 solution.neighbors.left_value,
-                solution.right_right_value,
-                solution.right_expiration,
-                solution.right_data.owner_launcher_id,
-                solution.right_data.resolved_data,
+                solution.right_rest_of_slot.this_this_value,
+                solution.right_rest_of_slot.this_expiration,
+                solution.right_rest_of_slot.this_data.owner_launcher_id,
+                solution.right_rest_of_slot.this_data.resolved_launcher_id,
             ),
         ])
     }
@@ -106,7 +115,7 @@ impl XchandlesRegisterAction {
     pub fn created_slot_values(
         ctx: &mut SpendContext,
         solution: NodePtr,
-    ) -> Result<[XchandlesSlotValue; 3], DriverError> {
+    ) -> Result<[XchandlesHandleSlotValue; 3], DriverError> {
         let solution = XchandlesRegisterActionSolution::<
             NodePtr,
             NodePtr,
@@ -116,53 +125,63 @@ impl XchandlesRegisterAction {
         >::from_clvm(ctx, solution)?;
 
         let pricing_output = ctx.run(
-            solution.pricing_puzzle_reveal,
-            solution.pricing_puzzle_solution,
+            solution.pricing_puzzle_and_solution.puzzle,
+            solution.pricing_puzzle_and_solution.solution,
         )?;
         let registration_time_delta = <(NodePtr, u64)>::from_clvm(ctx, pricing_output)?.1;
 
-        let (start_time, _) = ctx.extract::<(u64, NodePtr)>(solution.pricing_puzzle_solution)?;
+        let (start_time, _) =
+            ctx.extract::<(u64, NodePtr)>(solution.pricing_puzzle_and_solution.solution)?;
 
         Ok([
-            XchandlesSlotValue::new(
+            XchandlesHandleSlotValue::new(
                 solution.neighbors.left_value,
-                solution.left_left_value,
+                solution.left_rest_of_slot.this_this_value,
                 solution.handle_hash,
-                solution.left_expiration,
-                solution.left_data.owner_launcher_id,
-                solution.left_data.resolved_data,
+                solution.left_rest_of_slot.this_expiration,
+                solution.left_rest_of_slot.this_data.owner_launcher_id,
+                solution.left_rest_of_slot.this_data.resolved_launcher_id,
             ),
-            XchandlesSlotValue::new(
+            XchandlesHandleSlotValue::new(
                 solution.handle_hash,
                 solution.neighbors.left_value,
                 solution.neighbors.right_value,
                 start_time + registration_time_delta,
-                solution.data.owner_launcher_id,
-                solution.data.resolved_data,
+                solution.other_precommit_data.launcher_ids.owner_launcher_id,
+                solution
+                    .other_precommit_data
+                    .launcher_ids
+                    .resolved_launcher_id,
             ),
-            XchandlesSlotValue::new(
+            XchandlesHandleSlotValue::new(
                 solution.neighbors.right_value,
                 solution.handle_hash,
-                solution.right_right_value,
-                solution.right_expiration,
-                solution.right_data.owner_launcher_id,
-                solution.right_data.resolved_data,
+                solution.right_rest_of_slot.this_this_value,
+                solution.right_rest_of_slot.this_expiration,
+                solution.right_rest_of_slot.this_data.owner_launcher_id,
+                solution.right_rest_of_slot.this_data.resolved_launcher_id,
             ),
         ])
     }
 
+    // return:
+    //  - register general announcement
+    //  - send message to be sent by the new owner
+    //  - send message to be sent by the new resolved launcher (if different from the owner)
     #[allow(clippy::too_many_arguments)]
     pub fn spend(
         self,
         ctx: &mut SpendContext,
         registry: &mut XchandlesRegistry,
-        left_slot: Slot<XchandlesSlotValue>,
-        right_slot: Slot<XchandlesSlotValue>,
-        precommit_coin: PrecommitCoin<XchandlesPrecommitValue>,
+        left_slot: Slot<XchandlesHandleSlotValue>,
+        right_slot: Slot<XchandlesHandleSlotValue>,
+        precommit_coin: &PrecommitCoin<XchandlesPrecommitValue>,
         base_handle_price: u64,
         registration_period: u64,
         start_time: u64,
-    ) -> Result<Conditions, DriverError> {
+        owner_inner_puzzle_hash: Bytes32,
+        resolved_inner_puzzle_hash: Bytes32,
+    ) -> Result<(Conditions, Conditions, Option<Conditions>), DriverError> {
         let handle = precommit_coin.value.handle.clone();
         let handle_hash = handle.tree_hash().into();
         let (left_slot, right_slot) = registry.actual_neigbors(handle_hash, left_slot, right_slot);
@@ -173,8 +192,19 @@ impl XchandlesRegisterAction {
             / XchandlesFactorPricingPuzzleArgs::get_price(base_handle_price, &handle, 1);
 
         // calculate announcement
-        let mut register_announcement = precommit_coin.coin.puzzle_hash.to_vec();
-        register_announcement.insert(0, b'r');
+        let register_announcement =
+            XchandlesRegistryCreatedAnnouncementPrefix::register(precommit_coin.coin.puzzle_hash);
+        let new_owner_message =
+            XchandlesRegistryReceivedMessagePrefix::register_owner(precommit_coin.coin.puzzle_hash);
+        let new_resolved_message = if precommit_coin.value.resolved_launcher_id
+            == precommit_coin.value.owner_launcher_id
+        {
+            None
+        } else {
+            Some(XchandlesRegistryReceivedMessagePrefix::register_resolved(
+                precommit_coin.coin.puzzle_hash,
+            ))
+        };
 
         // spend precommit coin
         let my_inner_puzzle_hash = registry.info.inner_puzzle_hash().into();
@@ -183,36 +213,48 @@ impl XchandlesRegisterAction {
         // spend self
         let action_solution = XchandlesRegisterActionSolution {
             handle_hash,
-            pricing_puzzle_reveal: ctx.curry(XchandlesFactorPricingPuzzleArgs {
-                base_price: base_handle_price,
-                registration_period,
-            })?,
-            pricing_puzzle_solution: XchandlesPricingSolution {
-                buy_time: start_time,
-                current_expiration: 0,
-                handle: handle.clone(),
-                num_periods,
-            },
-            cat_maker_reveal: ctx.curry(DefaultCatMakerArgs::new(
-                precommit_coin.asset_id.tree_hash().into(),
-            ))?,
-            cat_maker_solution: (),
             neighbors: SlotNeigborsInfo {
                 left_value: left_slot.info.value.handle_hash,
                 right_value: right_slot.info.value.handle_hash,
             },
-            left_left_value: left_slot.info.value.neighbors.left_value,
-            left_expiration: left_slot.info.value.expiration,
-            left_data: left_slot.info.value.rest_data(),
-            right_right_value: right_slot.info.value.neighbors.right_value,
-            right_expiration: right_slot.info.value.expiration,
-            right_data: right_slot.info.value.rest_data(),
-            data: XchandlesDataValue {
-                owner_launcher_id: precommit_coin.value.owner_launcher_id,
-                resolved_data: precommit_coin.value.resolved_data,
-            },
-            refund_puzzle_hash_hash: precommit_coin.refund_puzzle_hash.tree_hash().into(),
-            secret,
+            cat_maker_puzzle_and_solution: PuzzleAndSolution::new(
+                ctx.curry(DefaultCatMakerArgs::new(
+                    precommit_coin.asset_id.tree_hash().into(),
+                ))?,
+                (),
+            ),
+            pricing_puzzle_and_solution: PuzzleAndSolution::new(
+                ctx.curry(XchandlesFactorPricingPuzzleArgs {
+                    base_price: base_handle_price,
+                    registration_period,
+                })?,
+                XchandlesPricingSolution {
+                    buy_time: start_time,
+                    current_expiration: 0,
+                    handle: handle.clone(),
+                    num_periods,
+                },
+            ),
+            left_rest_of_slot: XchandlesRestOfSlot::new(
+                left_slot.info.value.neighbors.left_value,
+                left_slot.info.value.expiration,
+                left_slot.info.value.rest_data(),
+            ),
+            right_rest_of_slot: XchandlesRestOfSlot::new(
+                right_slot.info.value.neighbors.right_value,
+                right_slot.info.value.expiration,
+                right_slot.info.value.rest_data(),
+            ),
+            data_puzzle_hashes: XchandlesNewDataPuzzleHashes::new(
+                owner_inner_puzzle_hash,
+                resolved_inner_puzzle_hash,
+            ),
+            other_precommit_data: XchandlesOtherPrecommitData::new(
+                precommit_coin.value.owner_launcher_id,
+                precommit_coin.value.resolved_launcher_id,
+                precommit_coin.refund_puzzle_hash.tree_hash().into(),
+                secret,
+            ),
         }
         .to_clvm(ctx)?;
         let action_puzzle = self.construct_puzzle(ctx)?;
@@ -223,12 +265,17 @@ impl XchandlesRegisterAction {
         left_slot.spend(ctx, my_inner_puzzle_hash)?;
         right_slot.spend(ctx, my_inner_puzzle_hash)?;
 
-        Ok(
+        let message_destination = ctx.alloc(&registry.coin.puzzle_hash)?;
+        Ok((
             Conditions::new().assert_puzzle_announcement(announcement_id(
                 registry.coin.puzzle_hash,
                 register_announcement,
             )),
-        )
+            Conditions::new().send_message(18, new_owner_message.into(), vec![message_destination]),
+            new_resolved_message.map(|message| {
+                Conditions::new().send_message(18, message.into(), vec![message_destination])
+            }),
+        ))
     }
 }
 

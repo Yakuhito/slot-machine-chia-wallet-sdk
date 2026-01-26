@@ -3,19 +3,20 @@ use chia_puzzle_types::singleton::SingletonStruct;
 use chia_sdk_types::{
     announcement_id,
     puzzles::{
-        CatalogRegisterActionArgs, CatalogRegisterActionSolution, CatalogSlotValue,
-        DefaultCatMakerArgs, NftPack, PrecommitSpendMode, ANY_METADATA_UPDATER_HASH,
+        CatalogDoubleTailHashData, CatalogOtherPrecommitData, CatalogRegisterActionArgs,
+        CatalogRegisterActionSolution, CatalogSlotValue, DefaultCatMakerArgs, NftPack,
+        PrecommitSpendMode, PuzzleAndSolution, ANY_METADATA_UPDATER_HASH,
     },
     Conditions, Mod,
 };
-use clvm_traits::{clvm_tuple, FromClvm, ToClvm};
+use clvm_traits::{FromClvm, ToClvm};
 use clvm_utils::{ToTreeHash, TreeHash};
 use clvmr::NodePtr;
 
 use crate::{
-    CatalogPrecommitValue, CatalogRegistry, CatalogRegistryConstants, DriverError, HashedPtr,
-    PrecommitCoin, PrecommitLayer, SingletonAction, Slot, Spend, SpendContext,
-    UniquenessPrelauncher,
+    CatalogPrecommitValue, CatalogRegistry, CatalogRegistryConstants,
+    CatalogRegistryCreatedAnnouncementPrefix, DriverError, HashedPtr, PrecommitCoin,
+    PrecommitLayer, SingletonAction, Slot, Spend, SpendContext, UniquenessPrelauncher,
 };
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -93,14 +94,14 @@ impl CatalogRegisterAction {
 
         Ok([
             CatalogSlotValue::new(
-                params.left_tail_hash,
-                params.left_left_tail_hash,
-                params.right_tail_hash,
+                params.left_data.this_tail_hash,
+                params.left_data.this_this_tail_hash,
+                params.right_data.this_tail_hash,
             ),
             CatalogSlotValue::new(
-                params.right_tail_hash,
-                params.left_tail_hash,
-                params.right_right_tail_hash,
+                params.right_data.this_tail_hash,
+                params.left_data.this_tail_hash,
+                params.right_data.this_this_tail_hash,
             ),
         ])
     }
@@ -114,19 +115,19 @@ impl CatalogRegisterAction {
 
         Ok([
             CatalogSlotValue::new(
-                params.left_tail_hash,
-                params.left_left_tail_hash,
-                params.tail_hash,
+                params.left_data.this_tail_hash,
+                params.left_data.this_this_tail_hash,
+                params.other_precommit_data.tail_hash,
             ),
             CatalogSlotValue::new(
-                params.tail_hash,
-                params.left_tail_hash,
-                params.right_tail_hash,
+                params.other_precommit_data.tail_hash,
+                params.left_data.this_tail_hash,
+                params.right_data.this_tail_hash,
             ),
             CatalogSlotValue::new(
-                params.right_tail_hash,
-                params.tail_hash,
-                params.right_right_tail_hash,
+                params.right_data.this_tail_hash,
+                params.other_precommit_data.tail_hash,
+                params.right_data.this_this_tail_hash,
             ),
         ])
     }
@@ -143,11 +144,10 @@ impl CatalogRegisterAction {
         eve_nft_inner_spend: Spend,
     ) -> Result<Conditions, DriverError> {
         // calculate announcement
-        let mut register_announcement =
-            clvm_tuple!(tail_hash, precommit_coin.value.initial_inner_puzzle_hash)
-                .tree_hash()
-                .to_vec();
-        register_announcement.insert(0, b'r');
+        let register_announcement = CatalogRegistryCreatedAnnouncementPrefix::register(
+            tail_hash,
+            precommit_coin.value.initial_inner_puzzle_hash,
+        );
 
         // spend precommit coin
         let initial_inner_puzzle_hash = precommit_coin.value.initial_inner_puzzle_hash;
@@ -175,17 +175,25 @@ impl CatalogRegisterAction {
         // finally, spend self
         let (left_slot, right_slot) = catalog.actual_neigbors(tail_hash, left_slot, right_slot);
         let my_solution = CatalogRegisterActionSolution {
-            cat_maker_reveal: ctx.curry(DefaultCatMakerArgs::new(
-                precommit_coin.asset_id.tree_hash().into(),
-            ))?,
-            cat_maker_solution: (),
-            tail_hash,
-            initial_nft_owner_ph: initial_inner_puzzle_hash,
-            refund_puzzle_hash_hash: precommit_coin.refund_puzzle_hash.tree_hash().into(),
-            left_tail_hash: left_slot.info.value.asset_id,
-            left_left_tail_hash: left_slot.info.value.neighbors.left_value,
-            right_tail_hash: right_slot.info.value.asset_id,
-            right_right_tail_hash: right_slot.info.value.neighbors.right_value,
+            precommitted_cat_maker_data: PuzzleAndSolution::new(
+                ctx.curry(DefaultCatMakerArgs::new(
+                    precommit_coin.asset_id.tree_hash().into(),
+                ))?,
+                (),
+            ),
+            other_precommit_data: CatalogOtherPrecommitData::new(
+                tail_hash,
+                initial_inner_puzzle_hash,
+                precommit_coin.refund_puzzle_hash.tree_hash().into(),
+            ),
+            left_data: CatalogDoubleTailHashData::new(
+                left_slot.info.value.asset_id,
+                left_slot.info.value.neighbors.left_value,
+            ),
+            right_data: CatalogDoubleTailHashData::new(
+                right_slot.info.value.asset_id,
+                right_slot.info.value.neighbors.right_value,
+            ),
             my_id: catalog.coin.coin_id(),
         };
         let my_solution = my_solution.to_clvm(ctx)?;

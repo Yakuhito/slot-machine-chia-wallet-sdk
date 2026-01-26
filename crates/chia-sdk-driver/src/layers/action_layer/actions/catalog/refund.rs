@@ -3,18 +3,20 @@ use chia_puzzle_types::singleton::SingletonStruct;
 use chia_sdk_types::{
     announcement_id,
     puzzles::{
-        CatalogRefundActionArgs, CatalogRefundActionSolution, CatalogSlotValue,
-        DefaultCatMakerArgs, PrecommitSpendMode, SlotNeigborsInfo,
+        CatalogOtherPrecommitData, CatalogRefundActionArgs, CatalogRefundActionSolution,
+        CatalogSlotValue, DefaultCatMakerArgs, PrecommitSpendMode, PuzzleHashPuzzleAndSolution,
+        SlotNeigborsInfo,
     },
     Conditions, Mod,
 };
-use clvm_traits::{clvm_tuple, FromClvm, ToClvm};
+use clvm_traits::{FromClvm, ToClvm};
 use clvm_utils::{ToTreeHash, TreeHash};
 use clvmr::NodePtr;
 
 use crate::{
-    CatalogPrecommitValue, CatalogRegistry, CatalogRegistryConstants, DriverError, PrecommitCoin,
-    PrecommitLayer, SingletonAction, Slot, Spend, SpendContext,
+    CatalogPrecommitValue, CatalogRegistry, CatalogRegistryConstants,
+    CatalogRegistryCreatedAnnouncementPrefix, DriverError, PrecommitCoin, PrecommitLayer,
+    SingletonAction, Slot, Spend, SpendContext,
 };
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -78,7 +80,7 @@ impl CatalogRefundAction {
         let params = CatalogRefundActionSolution::<NodePtr, ()>::from_clvm(ctx, solution)?;
 
         Ok(params.neighbors.map(|neighbors| CatalogSlotValue {
-            asset_id: params.tail_hash,
+            asset_id: params.other_precommit_data.tail_hash,
             neighbors,
         }))
     }
@@ -101,11 +103,10 @@ impl CatalogRefundAction {
         slot: Option<Slot<CatalogSlotValue>>,
     ) -> Result<Conditions, DriverError> {
         // calculate announcement
-        let mut refund_announcement =
-            clvm_tuple!(tail_hash, precommit_coin.value.initial_inner_puzzle_hash)
-                .tree_hash()
-                .to_vec();
-        refund_announcement.insert(0, b'$');
+        let refund_announcement = CatalogRegistryCreatedAnnouncementPrefix::refund(
+            tail_hash,
+            precommit_coin.value.initial_inner_puzzle_hash,
+        );
 
         let secure_conditions = Conditions::new().assert_puzzle_announcement(announcement_id(
             catalog.coin.puzzle_hash,
@@ -126,12 +127,16 @@ impl CatalogRefundAction {
         // then, create action spend
         let cat_maker_args = DefaultCatMakerArgs::new(precommit_coin.asset_id.tree_hash().into());
         let action_solution = CatalogRefundActionSolution {
-            precommited_cat_maker_reveal: ctx.curry(cat_maker_args)?,
-            precommited_cat_maker_hash: cat_maker_args.curry_tree_hash().into(),
-            precommited_cat_maker_solution: (),
-            tail_hash,
-            initial_nft_owner_ph: initial_inner_puzzle_hash,
-            refund_puzzle_hash_hash: precommit_coin.refund_puzzle_hash.tree_hash().into(),
+            precommited_cat_maker_and_solution: PuzzleHashPuzzleAndSolution::new(
+                cat_maker_args.curry_tree_hash().into(),
+                ctx.curry(cat_maker_args)?,
+                (),
+            ),
+            other_precommit_data: CatalogOtherPrecommitData::new(
+                tail_hash,
+                initial_inner_puzzle_hash,
+                precommit_coin.refund_puzzle_hash.tree_hash().into(),
+            ),
             precommit_amount: precommit_coin.coin.amount,
             neighbors,
         };
