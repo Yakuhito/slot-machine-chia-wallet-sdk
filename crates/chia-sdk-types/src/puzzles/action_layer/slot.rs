@@ -9,26 +9,25 @@ use hex_literal::hex;
 
 use crate::{puzzles::CompactLineageProof, Mod};
 
-pub const SLOT_PUZZLE: [u8; 359] = hex!(
+pub const SLOT_PUZZLE: [u8; 311] = hex!(
+    // Rue
     "
-    ff02ffff01ff04ffff04ff08ffff04ffff30ff4fffff02ff1effff04ff02ffff
-    04ff05ffff04ff81afff8080808080ff81ef80ff808080ffff04ffff04ff0cff
-    ff04ffff0112ffff04ff80ffff04ffff02ff1effff04ff02ffff04ff05ffff04
-    ff3fff8080808080ff8080808080ff808080ffff04ffff01ffff4743ff02ffff
-    ffa04bf5122f344554c53bde2ebb8cd2b7e3d1600ad631c385a5d7cce23c7785
-    459aa09dcf97a184f32623d11a73124ceb99a5709b083721e878a16d78f59671
-    8ba7b2ffa102a12871fee210fb8619291eaea194581cbd2531e4b23759d225f6
-    806923f63222a102a8d5dd63fba471ebcb1f3e8f7c1e1879b7152a6e7298a91c
-    e119a63400ade7c5ff0bff56ffff0bff0affff0bff0aff66ff0980ffff0bff0a
-    ffff0bff76ffff0bff0affff0bff0aff66ff0d80ffff0bff0affff0bff76ffff
-    0bff0affff0bff0aff66ff0b80ffff0bff0aff66ff46808080ff46808080ff46
-    808080ff018080
+    ff02ffff01ff04ffff04ffff0147ffff04ffff30ff4fffff02ff04ffff04ff06
+    ffff04ff05ff81af808080ff81ef80ff808080ffff04ffff04ffff0143ffff04
+    ffff0112ffff04ff80ffff04ffff02ff04ffff04ff06ffff04ff05ff3f808080
+    ff8080808080ff808080ffff04ffff04ffff01ff0bffff0102ffff0bffff0182
+    010280ffff0bffff0102ffff0bffff0102ffff0bffff0182010180ff0980ffff
+    0bffff0102ffff02ff02ffff04ff02ffff04ff0dffff04ff07ff8080808080ff
+    ff0bffff010180808080ffff01ff02ffff03ff03ffff01ff0bffff0102ffff0b
+    ffff0182010480ffff0bffff0102ffff0bffff0102ffff0bffff0182010180ff
+    0580ffff0bffff0102ffff02ff02ffff04ff02ff078080ffff0bffff01018080
+    8080ffff01ff0bffff018201018080ff018080ff018080
     "
 );
 
 pub const SLOT_PUZZLE_HASH: TreeHash = TreeHash::new(hex!(
     "
-    27de4bb4bc5c6881c08e7e57288e2b855d934fd6f03ef6d8657e15a35e8f96f8
+    8ab9f3b57a65d7f7a0810f79f7bc1e96bda680d16dd6f51d51e868e13fc7bbb3
     "
 ));
 
