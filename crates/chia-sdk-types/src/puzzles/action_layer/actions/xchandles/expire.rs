@@ -12,55 +12,52 @@ use crate::{
     Mod,
 };
 
-pub const XCHANDLES_EXPIRE_PUZZLE: [u8; 1303] = hex!(
+pub const XCHANDLES_EXPIRE_PUZZLE: [u8; 1158] = hex!(
+    // Rue
     "
-    ff02ffff01ff02ffff03ffff22ffff09ffff02ff2effff04ff02ffff04ff8202
-    7fff80808080ff82015f80ffff09ffff02ff2effff04ff02ffff04ff82013fff
-    80808080ff8203df8080ffff01ff04ff5fffff04ffff04ff10ffff04ff8202bf
-    ff808080ffff04ffff04ff10ffff04ff8205bfff808080ffff04ffff02ff3eff
-    ff04ff02ffff04ff2fffff04ffff02ff2effff04ff02ffff04ffff04ffff04ff
-    ff0bffff0101ff820bbf80ff8205ff80ffff04ff8205bfff820bff8080ff8080
-    8080ff8080808080ffff04ffff02ff3affff04ff02ffff04ff2fffff04ffff02
-    ff2effff04ff02ffff04ffff04ffff04ffff0bffff0101ff820bbf80ff8205ff
-    80ffff04ffff10ffff06ffff02ff82013fff8201bf8080ff8202bf80ff8204ff
-    8080ff80808080ff8080808080ffff02ff2affff04ff02ffff04ffff02ff8202
-    7fffff04ffff02ff26ffff04ff02ffff04ff17ffff04ff820affffff04ffff0b
-    ffff0101ffff02ff2effff04ff02ffff04ffff04ffff04ffff04ff82015fff82
-    037f80ffff04ff8203dfff8201bf8080ffff04ffff04ff820bbfff820eff80ff
-    ff04ff8208ffff820cff808080ff8080808080ff808080808080ff82037f8080
-    ffff04ffff05ffff02ff82013fff8201bf8080ffff04ffff02ff26ffff04ff02
-    ffff04ff05ffff04ffff02ff2effff04ff02ffff04ffff04ff05ffff04ff8208
-    ffff0b8080ff80808080ffff04ff8217ffff808080808080ffff04ffff02ff26
-    ffff04ff02ffff04ff05ffff04ffff02ff2effff04ff02ffff04ffff04ff05ff
-    ff04ff820cffff0b8080ff80808080ffff04ff821fffff808080808080ff8080
-    80808080808080808080ffff01ff088080ff0180ffff04ffff01ffffff51ff33
-    3effff4342ff02ff02ffff03ff05ffff01ff0bff72ffff02ff36ffff04ff02ff
-    ff04ff09ffff04ffff02ff3cffff04ff02ffff04ff0dff80808080ff80808080
-    8080ffff016280ff0180ffffffffa04bf5122f344554c53bde2ebb8cd2b7e3d1
-    600ad631c385a5d7cce23c7785459aa09dcf97a184f32623d11a73124ceb99a5
-    709b083721e878a16d78f596718ba7b2ffa102a12871fee210fb8619291eaea1
-    94581cbd2531e4b23759d225f6806923f63222a102a8d5dd63fba471ebcb1f3e
-    8f7c1e1879b7152a6e7298a91ce119a63400ade7c5ffff04ffff04ff34ffff04
-    ffff0113ffff04ffff0101ffff04ff05ffff04ff0bff808080808080ffff04ff
-    ff04ff38ffff04ffff0effff0178ff0580ff808080ffff04ffff04ff24ffff04
-    ffff0112ffff04ffff0effff0165ff0580ffff04ff17ff8080808080ffff02ff
-    ff03ffff09ff17ff2f80ff80ffff01ff04ffff04ff24ffff04ffff0112ffff04
-    ffff0effff0166ff0580ffff04ff2fff8080808080ff808080ff0180808080ff
-    04ff28ffff04ffff02ff26ffff04ff02ffff04ff05ffff04ffff0bffff0101ff
-    0b80ff8080808080ffff04ff80ffff04ffff04ff05ff8080ff8080808080ffff
-    ff0bff52ffff02ff36ffff04ff02ffff04ff05ffff04ffff02ff3cffff04ff02
-    ffff04ff07ff80808080ff808080808080ff0bff2cffff0bff2cff62ff0580ff
-    ff0bff2cff0bff428080ffff02ffff03ffff07ff0580ffff01ff0bffff0102ff
-    ff02ff2effff04ff02ffff04ff09ff80808080ffff02ff2effff04ff02ffff04
-    ff0dff8080808080ffff01ff0bffff0101ff058080ff0180ff04ff34ffff04ff
-    ff0112ffff04ff80ffff04ffff02ff26ffff04ff02ffff04ff05ffff04ffff0b
-    ffff0101ff0b80ff8080808080ff8080808080ff018080
+    ff02ffff01ff02ffff03ffff02ffff03ffff09ffff02ff04ffff04ff04ff8202
+    7f8080ff82015f80ffff01ff02ffff03ffff09ffff02ff04ffff04ff04ff8201
+    3f8080ff8203df80ffff01ff0101ffff018080ff0180ffff018080ff0180ffff
+    01ff02ffff01ff02ffff01ff02ffff01ff04ff8202ffffff02ffff03ffff09ff
+    8247ffff8267ff80ffff0102ffff01ff04ffff04ffff0143ffff04ffff0112ff
+    ff04ffff0effff0166ff0580ffff04ffff02ff57ffff04ff81b7ffff04ff2fff
+    ff04ffff02ff27ffff04ff27ffff04ff2fffff04ff8267ffff5f80808080ffff
+    04ff82ffffff808080808080ff8080808080ff028080ff018080ffff04ffff04
+    ffff04ffff0151ffff04ff820affff808080ffff04ffff04ffff0151ffff04ff
+    8216ffff808080ffff04ffff04ffff0142ffff04ffff0112ffff04ff80ffff04
+    ffff02ff2bffff04ff5bffff04ff81bfffff04ffff0bffff0101ffff02ff13ff
+    ff04ff13ffff04ffff04ff09ff8217ff80ffff04ff8216ffff822fff80808080
+    80ff8080808080ff8080808080ffff04ffff02ff7bffff04ffff04ff2bff5b80
+    ffff04ff81bfffff02ff13ffff04ff13ffff04ffff04ff09ff8217ff80ffff04
+    ffff10ff1dff820aff80ff8213ff80808080808080ffff04ffff04ffff0142ff
+    ff04ffff0113ffff04ffff0101ffff04ff02ffff04ff15ff808080808080ffff
+    04ffff04ffff013effff04ffff0effff0178ff0280ff808080ffff04ffff04ff
+    ff0143ffff04ffff0112ffff04ffff0effff0165ff0280ffff04ffff02ff2bff
+    ff04ff5bffff04ff17ffff04ffff02ff13ffff04ff13ffff04ff17ffff04ff82
+    23ffff2f80808080ffff04ff825fffff808080808080ff8080808080ff808080
+    8080808080ff018080ffff04ffff02ff8204ffffff04ffff02ff15ffff04ff2d
+    ffff04ff2fffff04ff8215ffffff04ffff0bffff0101ffff02ff09ffff04ff09
+    ffff04ffff04ffff04ff8202bfff8206ff80ffff04ff8207bfff82037f8080ff
+    ff04ffff04ff82177fff821dff80ff8209ff8080808080ff808080808080ff82
+    06ff8080ff018080ffff04ffff04ffff0bffff0101ff820bbf80ffff02ff8201
+    3fff8201bf8080ff018080ffff01ff088080ff0180ffff04ffff04ffff01ff02
+    ffff03ffff07ff0380ffff01ff0bffff0102ffff02ff02ffff04ff02ff058080
+    ffff02ff02ffff04ff02ff07808080ffff01ff0bffff0101ff038080ff0180ff
+    ff04ffff01ff0bffff0102ffff0bffff0182010280ffff0bffff0102ffff0bff
+    ff0102ffff0bffff0182010180ff0580ffff0bffff0102ffff02ff02ffff04ff
+    02ff078080ffff0bffff010180808080ffff04ffff01ff02ffff03ff03ffff01
+    ff0bffff0102ffff0bffff0182010480ffff0bffff0102ffff0bffff0102ffff
+    0bffff0182010180ff0580ffff0bffff0102ffff02ff02ffff04ff02ff078080
+    ffff0bffff010180808080ffff01ff0bffff018201018080ff0180ffff01ff04
+    ffff0133ffff04ffff02ff04ffff04ff06ffff04ff05ffff04ffff0bffff0101
+    ff0780ff8080808080ffff04ff80ffff04ffff04ff05ff8080ff808080808080
+    8080ff018080
     "
 );
 
 pub const XCHANDLES_EXPIRE_PUZZLE_HASH: TreeHash = TreeHash::new(hex!(
     "
-    d97f49ef4bd91aa3ebd5501240f625f8ad5f499cdf4b252e2c8e3d2c2ad99d23
+    dedf6328b3e7fef1fce1a09d28b622c50dfb42386ed68ace5bc8a49fec4a4d0d
     "
 ));
 
