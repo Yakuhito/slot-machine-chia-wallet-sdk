@@ -7,6 +7,7 @@ use hex_literal::hex;
 use crate::Mod;
 
 pub const XCHANDLES_EXPONENTIAL_PREMIUM_RENEW_PUZZLE: [u8; 296] = hex!(
+    // Rue
     "
     ff02ffff01ff02ffff01ff04ffff10ff04ffff02ff0dffff04ffff02ff09ffff
     04ff09ffff04ffff04ff82017fffff13ff2fffff17ffff0101ffff10ffff13ff

@@ -10,49 +10,46 @@ use crate::{
     Mod,
 };
 
-pub const XCHANDLES_EXECUTE_UPDATE_PUZZLE: [u8; 1120] = hex!(
+pub const XCHANDLES_EXECUTE_UPDATE_PUZZLE: [u8; 976] = hex!(
+    // Rue
     "
-    ff02ffff01ff04ff5fffff04ffff04ff10ffff04ff82057fff808080ffff04ff
-    ff04ff28ffff04ff81bfff808080ffff04ffff02ff3effff04ff02ffff04ff17
-    ffff04ffff02ff16ffff04ff02ffff04ff82017fff80808080ff8080808080ff
-    ff04ffff02ff3affff04ff02ffff04ff17ffff04ffff02ff16ffff04ff02ffff
-    04ffff04ff82027fffff04ff82057fff8202ff8080ff80808080ff8080808080
-    ffff02ff2affff04ff02ffff04ff2fffff04ffff02ff16ffff04ff02ffff04ff
-    ff04ff82047fff8202ff80ff80808080ffff04ffff02ff16ffff04ff02ffff04
-    ffff04ff8209ffff81bf80ff80808080ffff04ffff30ff8209ffffff02ff2eff
-    ff04ff02ffff04ff05ffff04ff0bffff04ff820b7fffff04ff8215ffff808080
-    80808080ff821dff80ffff04ffff02ff2effff04ff02ffff04ff05ffff04ff0b
-    ffff04ff8204ffffff04ff820bffff80808080808080ffff04ffff02ff2effff
-    04ff02ffff04ff05ffff04ff0bffff04ff8206ffffff04ff820fffff80808080
-    808080ff8080808080808080808080808080ffff04ffff01ffffff55ff5333ff
-    43ff4202ffffffffa04bf5122f344554c53bde2ebb8cd2b7e3d1600ad631c385
-    a5d7cce23c7785459aa09dcf97a184f32623d11a73124ceb99a5709b083721e8
-    78a16d78f596718ba7b2ffa102a12871fee210fb8619291eaea194581cbd2531
-    e4b23759d225f6806923f63222a102a8d5dd63fba471ebcb1f3e8f7c1e1879b7
-    152a6e7298a91ce119a63400ade7c5ffff04ffff04ff14ffff04ffff013affff
-    04ffff0effff0175ff0b80ffff04ff2fff8080808080ffff04ffff04ff14ffff
-    04ffff0112ffff04ffff0effff016fff0b80ffff04ff5fff8080808080ffff04
-    ffff04ff14ffff04ffff0112ffff04ffff0effff0172ff0b80ffff04ff81bfff
-    8080808080ffff04ffff02ff3effff04ff02ffff04ff05ffff04ffff0bffff01
-    02ff17ff0b80ff8080808080ff8080808080ff04ff38ffff04ffff0bff52ffff
-    0bff3cffff0bff3cff62ff0580ffff0bff3cffff0bff72ffff0bff3cffff0bff
-    3cff62ffff0bffff0101ff0b8080ffff0bff3cff62ff42808080ff42808080ff
-    ff04ff80ffff04ffff04ff05ff8080ff8080808080ffff02ffff03ffff07ff05
-    80ffff01ff0bffff0102ffff02ff16ffff04ff02ffff04ff09ff80808080ffff
-    02ff16ffff04ff02ffff04ff0dff8080808080ffff01ff0bffff0101ff058080
-    ff0180ffff0bff52ffff0bff3cffff0bff3cff62ff0580ffff0bff3cffff0bff
-    72ffff0bff3cffff0bff3cff62ffff02ff16ffff04ff02ffff04ffff04ff05ff
-    ff04ff17ff0b8080ff8080808080ffff0bff3cffff0bff72ffff0bff3cffff0b
-    ff3cff62ff2f80ffff0bff3cff62ff42808080ff42808080ff42808080ff04ff
-    2cffff04ffff0112ffff04ff80ffff04ffff0bff52ffff0bff3cffff0bff3cff
-    62ff0580ffff0bff3cffff0bff72ffff0bff3cffff0bff3cff62ffff0bffff01
-    01ff0b8080ffff0bff3cff62ff42808080ff42808080ff8080808080ff018080
+    ff02ffff01ff02ffff01ff04ff81bfffff04ffff04ffff0155ffff04ff820aff
+    ff808080ffff04ffff04ffff0153ffff04ff82017fff808080ffff04ffff02ff
+    5dffff04ffff04ff15ff2d80ffff04ff2fffff02ff09ffff04ff09ff8202ff80
+    80808080ffff04ffff02ff7dffff04ffff04ff15ff2d80ffff04ff2fffff02ff
+    09ffff04ff09ffff04ff8204ffffff04ff820affff8205ff80808080808080ff
+    ff04ffff04ffff0143ffff04ffff013affff04ffff0effff0175ff0280ffff04
+    ffff30ff8213ffffff02ff15ffff04ff2dffff04ff0bffff04ffff02ff09ffff
+    04ff09ffff04ff0bffff04ff8216ffff1780808080ffff04ff822bffff808080
+    808080ff823bff80ff8080808080ffff04ffff04ffff0143ffff04ffff0112ff
+    ff04ffff0effff016fff0280ffff04ffff02ff15ffff04ff2dffff04ff0bffff
+    04ffff02ff09ffff04ff09ffff04ff0bffff04ff8209ffff1780808080ffff04
+    ff8217ffff808080808080ff8080808080ffff04ffff04ffff0143ffff04ffff
+    0112ffff04ffff0effff0172ff0280ffff04ffff02ff15ffff04ff2dffff04ff
+    0bffff04ffff02ff09ffff04ff09ffff04ff0bffff04ff820dffff1780808080
+    ffff04ff821fffff808080808080ff8080808080ffff04ffff02ff5dffff04ff
+    ff04ff15ff2d80ffff04ff5fffff0bffff0102ffff02ff09ffff04ff09ffff04
+    ff8213ffff82017f808080ff0280808080ff80808080808080808080ffff04ff
+    ff02ff04ffff04ff04ffff04ff82047fff8202ff808080ff018080ffff04ffff
+    04ffff01ff02ffff03ffff07ff0380ffff01ff0bffff0102ffff02ff02ffff04
+    ff02ff058080ffff02ff02ffff04ff02ff07808080ffff01ff0bffff0101ff03
+    8080ff0180ffff04ffff01ff0bffff0102ffff0bffff0182010280ffff0bffff
+    0102ffff0bffff0102ffff0bffff0182010180ff0580ffff0bffff0102ffff02
+    ff02ffff04ff02ff078080ffff0bffff010180808080ffff04ffff01ff02ffff
+    03ff03ffff01ff0bffff0102ffff0bffff0182010480ffff0bffff0102ffff0b
+    ffff0102ffff0bffff0182010180ff0580ffff0bffff0102ffff02ff02ffff04
+    ff02ff078080ffff0bffff010180808080ffff01ff0bffff018201018080ff01
+    80ffff04ffff01ff04ffff0142ffff04ffff0112ffff04ff80ffff04ffff02ff
+    04ffff04ff06ffff04ff05ffff04ffff0bffff0101ff0780ff8080808080ff80
+    80808080ffff01ff04ffff0133ffff04ffff02ff04ffff04ff06ffff04ff05ff
+    ff04ffff0bffff0101ff0780ff8080808080ffff04ff80ffff04ffff04ff05ff
+    8080ff808080808080808080ff018080
     "
 );
 
 pub const XCHANDLES_EXECUTE_UPDATE_PUZZLE_HASH: TreeHash = TreeHash::new(hex!(
     "
-    6aac0dda02af18afbc0b31ad62a40cd7d4c052bb7ae5b84d1db0e2724f891344
+    d6534ea206347423685790f911d091513b9d5deb6205ed8a5a8b41018239f078
     "
 ));
 
