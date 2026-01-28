@@ -6,29 +6,30 @@ use hex_literal::hex;
 
 use crate::Mod;
 
-pub const XCHANDLES_FACTOR_PRICING_PUZZLE: [u8; 475] = hex!(
+pub const XCHANDLES_FACTOR_PRICING_PUZZLE: [u8; 465] = hex!(
+    // Rue
     "
     ff02ffff01ff02ffff03ffff15ff7fff8080ffff01ff04ffff12ff7fff05ffff
-    02ff06ffff04ff02ffff04ffff0dff5f80ffff04ffff02ff04ffff04ff02ffff
-    04ff5fff80808080ff808080808080ffff12ff7fff0b8080ffff01ff088080ff
-    0180ffff04ffff01ffff02ffff03ff05ffff01ff02ffff03ffff22ffff15ffff
-    0cff05ff80ffff010180ffff016080ffff15ffff017bffff0cff05ff80ffff01
-    01808080ffff01ff02ff04ffff04ff02ffff04ffff0cff05ffff010180ff8080
-    8080ffff01ff02ffff03ffff22ffff15ffff0cff05ff80ffff010180ffff012f
-    80ffff15ffff013affff0cff05ff80ffff0101808080ffff01ff10ffff0101ff
-    ff02ff04ffff04ff02ffff04ffff0cff05ffff010180ff8080808080ffff01ff
-    088080ff018080ff0180ff8080ff0180ff05ffff14ffff02ffff03ffff15ff05
-    ffff010280ffff01ff02ffff03ffff15ff05ffff010480ffff01ff02ffff03ff
-    ff09ff05ffff010580ffff01ff0110ffff01ff02ffff03ffff15ff05ffff011f
-    80ffff01ff0880ffff01ff010280ff018080ff0180ffff01ff02ffff03ffff09
-    ff05ffff010380ffff01ff01820080ffff01ff014080ff018080ff0180ffff01
-    ff088080ff0180ffff03ff0bffff0102ffff0101808080ff018080
+    02ff06ffff04ffff0dff5f80ffff02ff04ffff04ff04ff5f8080808080ffff12
+    ff7fff0b8080ffff01ff088080ff0180ffff04ffff04ffff01ff02ffff03ff03
+    ffff01ff02ffff01ff02ffff03ffff02ffff03ffff15ff04ffff016080ffff01
+    ff02ffff03ffff15ffff017bff0480ffff01ff0101ffff018080ff0180ffff01
+    8080ff0180ffff01ff02ff05ffff04ff05ff068080ffff01ff02ffff03ffff02
+    ffff03ffff15ff04ffff012f80ffff01ff02ffff03ffff15ffff013aff0480ff
+    ff01ff0101ffff018080ff0180ffff018080ff0180ffff01ff10ffff02ff05ff
+    ff04ff05ff068080ffff010180ffff01ff088080ff018080ff0180ffff04ffff
+    04ffff0cff03ff80ffff010180ffff0cff03ffff01018080ff018080ffff0180
+    80ff0180ffff01ff13ffff02ffff03ffff15ff02ffff010280ffff01ff03ffff
+    15ff02ffff010480ffff03ffff09ff02ffff010580ffff0110ffff02ffff03ff
+    ff15ff02ffff011f80ffff01ff0880ffff01ff010280ff018080ffff03ffff09
+    ff02ffff010380ffff01820080ffff01408080ffff01ff088080ff0180ffff03
+    ff03ffff0102ffff0101808080ff018080
     "
 );
 
 pub const XCHANDLES_FACTOR_PRICING_PUZZLE_HASH: TreeHash = TreeHash::new(hex!(
     "
-    a7edc890e6c256e4e729e826e7b45ad0616ec8d431e4e051ee68ddf4cae868bb
+    f2cd9e13fffd0f0a53f4d23e8fc3733a4e713ba8dc54f3ce7f32586b8a0ae256
     "
 ));
 
