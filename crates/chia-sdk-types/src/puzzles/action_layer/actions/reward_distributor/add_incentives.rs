@@ -8,6 +8,7 @@ use hex_literal::hex;
 use crate::Mod;
 
 pub const REWARD_DISTRIBUTOR_ADD_INCENTIVES_PUZZLE: [u8; 247] = hex!(
+    // Rue
     "
     ff02ffff03ffff22ffff22ffff15ff8203f7ff8202f780ffff15ff2fff808080
     ffff09ff3fffff13ffff12ff2fff0580ffff01822710808080ffff01ff04ffff
