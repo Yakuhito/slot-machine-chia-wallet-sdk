@@ -11,7 +11,7 @@ use chia_sdk_types::{
 };
 use clvm_traits::{FromClvm, ToClvm};
 use clvm_utils::{ToTreeHash, TreeHash};
-use clvmr::NodePtr;
+use clvmr::{serde::node_to_bytes, NodePtr};
 
 use crate::{
     DriverError, PrecommitCoin, PrecommitLayer, SingletonAction, Slot, Spend, SpendContext,
