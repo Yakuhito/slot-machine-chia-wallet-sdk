@@ -11,42 +11,40 @@ use hex_literal::hex;
 
 use crate::{puzzles::NONCE_WRAPPER_PUZZLE_HASH, Mod};
 
-pub const REWARD_DISTRIBUTOR_NFTS_UNLOCKING_PUZZLE: [u8; 873] = hex!(
+pub const REWARD_DISTRIBUTOR_NFTS_UNLOCKING_PUZZLE: [u8; 779] = hex!(
+    // Rue
     "
-    ff02ffff01ff02ff2effff04ff02ffff04ff03ffff04ff8203ffffff01ff80ff
-    808080808080ffff04ffff01ffffff3343ff42ff02ff02ffff03ff05ffff01ff
-    0bff72ffff02ff16ffff04ff02ffff04ff09ffff04ffff02ff3cffff04ff02ff
-    ff04ff0dff80808080ff808080808080ffff016280ff0180ffffffffa04bf512
-    2f344554c53bde2ebb8cd2b7e3d1600ad631c385a5d7cce23c7785459aa09dcf
-    97a184f32623d11a73124ceb99a5709b083721e878a16d78f596718ba7b2ffa1
-    02a12871fee210fb8619291eaea194581cbd2531e4b23759d225f6806923f632
-    22a102a8d5dd63fba471ebcb1f3e8f7c1e1879b7152a6e7298a91ce119a63400
-    ade7c5ff0bff52ffff02ff16ffff04ff02ffff04ff05ffff04ffff02ff3cffff
-    04ff02ffff04ff07ff80808080ff808080808080ffff0bff2cffff0bff2cff62
-    ff0580ffff0bff2cff0bff428080ffff02ffff03ff0bffff01ff02ff2effff04
-    ff02ffff04ff05ffff04ff1bffff04ffff10ff17ff8207f380ffff04ffff04ff
-    ff04ff14ffff04ffff0117ffff04ffff02ff3effff04ff02ffff04ffff04ffff
-    0101ffff04ffff04ff10ffff04ff8205fdffff04ffff0101ffff04ffff04ff82
-    05fdff8080ff8080808080ff808080ff80808080ffff04ffff30ff53ffff02ff
-    1affff04ff02ffff04ff09ffff04ffff02ff3effff04ff02ffff04ffff04ff09
-    ffff04ff23ff158080ff80808080ffff04ffff02ff1affff04ff02ffff04ff2d
-    ffff04ffff0bffff0101ff2d80ffff04ff81b3ffff04ff820173ffff04ffff02
-    ff1affff04ff02ffff04ff5dffff04ffff0bffff0101ff5d80ffff04ffff0bff
-    ff0101ff8202f380ffff04ff8205f3ffff04ffff02ff1affff04ff02ffff04ff
-    81bdffff04ffff02ff3effff04ff02ffff04ffff04ff8205fdff8207f380ff80
-    808080ffff04ff82017dff808080808080ff8080808080808080ff8080808080
-    808080ff808080808080ffff010180ff8080808080ffff04ffff04ff18ffff04
-    ffff0112ffff04ffff0effff0175ff2380ffff04ff8205fdff8080808080ff2f
-    8080ff80808080808080ffff01ff04ff17ff2f8080ff0180ff02ffff03ffff07
-    ff0580ffff01ff0bffff0102ffff02ff3effff04ff02ffff04ff09ff80808080
-    ffff02ff3effff04ff02ffff04ff0dff8080808080ffff01ff0bffff0101ff05
-    8080ff0180ff018080
+    ff02ffff01ff02ff16ffff04ffff04ff04ffff04ff0affff04ff2effff04ff16
+    ff3e80808080ffff04ff03ffff04ff8203ffffff04ff80ff808080808080ffff
+    04ffff04ffff01ff02ffff03ffff07ff0380ffff01ff0bffff0102ffff02ff02
+    ffff04ff02ff058080ffff02ff02ffff04ff02ff07808080ffff01ff0bffff01
+    01ff038080ff0180ffff04ffff01ff0bffff0102ffff0bffff0182010280ffff
+    0bffff0102ffff0bffff0102ffff0bffff0182010180ff0580ffff0bffff0102
+    ffff02ff02ffff04ff02ff078080ffff0bffff010180808080ffff04ffff01ff
+    02ffff03ff0bffff01ff02ff2effff04ff02ffff04ff05ffff04ff1bffff04ff
+    ff10ff17ff8207f380ffff04ffff04ffff0142ffff04ffff0117ffff04ffff02
+    ff04ffff04ff04ffff04ffff0101ffff04ffff02ff3eff8205fd80ff80808080
+    80ffff04ffff30ff53ffff02ff0affff04ff16ffff04ff09ffff04ffff02ff04
+    ffff04ff04ffff04ff09ffff04ff23ff1580808080ffff04ffff02ff0affff04
+    ff16ffff04ff2dffff04ffff0bffff0101ff2d80ffff04ff81b3ffff04ff8201
+    73ffff04ffff02ff0affff04ff16ffff04ff5dffff04ffff0bffff0101ff5d80
+    ffff04ffff0bffff0101ff8202f380ffff04ff8205f3ffff04ffff02ff0affff
+    04ff16ffff04ff81bdffff04ffff02ff04ffff04ff04ffff04ff8205fdff8207
+    f3808080ffff04ff82017dff808080808080ff8080808080808080ff80808080
+    80808080ff808080808080ffff010180ff8080808080ffff04ffff04ffff0143
+    ffff04ffff0112ffff04ffff0effff0175ff2380ffff04ff8205fdff80808080
+    80ff1f80808080808080ffff010f80ff0180ffff04ffff01ff02ffff03ff03ff
+    ff01ff0bffff0102ffff0bffff0182010480ffff0bffff0102ffff0bffff0102
+    ffff0bffff0182010180ff0580ffff0bffff0102ffff02ff02ffff04ff02ff07
+    8080ffff0bffff010180808080ffff01ff0bffff018201018080ff0180ffff01
+    ff04ffff0133ffff04ff01ffff04ffff0101ffff04ffff04ff01ff8080ff8080
+    80808080808080ff018080
     "
 );
 
 pub const REWARD_DISTRIBUTOR_NFTS_UNLOCKING_PUZZLE_HASH: TreeHash = TreeHash::new(hex!(
     "
-    a515fc039812314bdbf490b940dc3de5e07a1165463c4bd2f647d4d21e628312
+    8115a69228801b923f4fdf8228bbfe874c4c5be186a6e1255a53679e9ff9e257
     "
 ));
 
