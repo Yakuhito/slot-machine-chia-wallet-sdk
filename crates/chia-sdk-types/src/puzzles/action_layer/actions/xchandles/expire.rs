@@ -12,12 +12,11 @@ use crate::{
     Mod,
 };
 
-pub const XCHANDLES_EXPIRE_PUZZLE: [u8; 1158] = hex!(
+pub const XCHANDLES_EXPIRE_PUZZLE: [u8; 1126] = hex!(
     // Rue
     "
-    ff02ffff01ff02ffff03ffff02ffff03ffff09ffff02ff04ffff04ff04ff8202
-    7f8080ff82015f80ffff01ff02ffff03ffff09ffff02ff04ffff04ff04ff8201
-    3f8080ff8203df80ffff01ff0101ffff018080ff0180ffff018080ff0180ffff
+    ff02ffff01ff02ffff03ffff22ffff09ffff02ff04ffff04ff04ff82027f8080
+    ff82015f80ffff09ffff02ff04ffff04ff04ff82013f8080ff8203df8080ffff
     01ff02ffff01ff02ffff01ff02ffff01ff04ff8202ffffff02ffff03ffff09ff
     8247ffff8267ff80ffff0102ffff01ff04ffff04ffff0143ffff04ffff0112ff
     ff04ffff0effff0166ff0580ffff04ffff02ff57ffff04ff81b7ffff04ff2fff
@@ -57,7 +56,7 @@ pub const XCHANDLES_EXPIRE_PUZZLE: [u8; 1158] = hex!(
 
 pub const XCHANDLES_EXPIRE_PUZZLE_HASH: TreeHash = TreeHash::new(hex!(
     "
-    dedf6328b3e7fef1fce1a09d28b622c50dfb42386ed68ace5bc8a49fec4a4d0d
+    bf2addcadd521d2e0a3708dfdc90ad870141c90d4329064b6011dfd72e20ae02
     "
 ));
 
