@@ -3119,7 +3119,7 @@ mod tests {
                     panic!("did_proof is not a lineage proof");
                 };
                 let nft_proof = NftLauncherProof {
-                    did_proof,
+                    did_proof: did_proof.into(),
                     intermediary_coin_proofs: vec![IntermediaryCoinProof {
                         full_puzzle_hash: nft_launcher_coin.puzzle_hash,
                         amount: nft_launcher_coin.amount,
@@ -3790,14 +3790,14 @@ mod tests {
                 panic!("did_proof is not a lineage proof");
             };
             let nft2_proof = NftLauncherProof {
-                did_proof,
+                did_proof: did_proof.into(),
                 intermediary_coin_proofs: vec![IntermediaryCoinProof {
                     full_puzzle_hash: nft2_launcher_coin.puzzle_hash,
                     amount: nft2_launcher_coin.amount,
                 }],
             };
             let nft3_proof = NftLauncherProof {
-                did_proof,
+                did_proof: did_proof.into(),
                 intermediary_coin_proofs: vec![IntermediaryCoinProof {
                     full_puzzle_hash: nft3_launcher_coin.puzzle_hash,
                     amount: nft3_launcher_coin.amount,
