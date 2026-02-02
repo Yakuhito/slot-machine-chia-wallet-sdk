@@ -12,7 +12,7 @@ use crate::{
     Mod,
 };
 
-pub const REWARD_DISTRIBUTOR_NFTS_FROM_DID_LOCKING_PUZZLE: [u8; 1005] = hex!(
+pub const REWARD_DISTRIBUTOR_NFTS_FROM_DID_LOCKING_PUZZLE: [u8; 931] = hex!(
     // Rue
     "
     ff02ffff01ff02ff16ffff04ffff04ff04ffff04ff0affff04ff2effff04ff3e
@@ -26,33 +26,31 @@ pub const REWARD_DISTRIBUTOR_NFTS_FROM_DID_LOCKING_PUZZLE: [u8; 1005] = hex!(
     ff17ffff04ff6fffff04ffff10ff5fffff010180ffff04ffff04ffff013fffff
     04ff02ff808080ffff04ffff04ffff013effff04ffff0effff016cff0280ff80
     8080ff7f80808080808080ffff04ffff0bffff02ff15ffff04ff2dffff04ff23
-    ffff04ffff02ff09ffff04ff09ffff04ff23ffff04ffff02ffff01ff02ff81bb
-    ffff04ff81bbffff04ff06ffff30ff08ffff02ff2bffff04ff5bffff04ff47ff
-    ff04ffff02ff13ffff04ff13ff278080ffff04ff14ff808080808080ff1c8080
-    8080ffff04ff3eff018080ff7380808080ffff04ffff02ff15ffff04ff2dffff
-    04ff2bffff04ffff0bffff0101ff2b80ffff04ff04ffff04ff0affff04ffff02
-    ff15ffff04ff2dffff04ff5bffff04ffff0bffff0101ff5b80ffff04ffff0bff
-    ff0101ff1680ffff04ff2effff04ff81bbff8080808080808080ff8080808080
-    808080ff808080808080ffff02ff09ffff04ff09ffff04ffff02ff09ffff04ff
-    09ffff04ff2fffff04ff8205fbff8217fb80808080ffff04ffff04ffff02ff15
-    ffff04ff2dffff04ff82017bffff04ffff02ff09ffff04ff09ffff04ff820bfb
-    ffff0101808080ffff04ff8202fbff808080808080ffff04ffff0101ffff04ff
-    ff04ffff02ff15ffff04ff2dffff04ff82017bffff04ffff02ff09ffff04ff09
-    ffff04ff820bfbffff0101808080ffff04ff8202fbff808080808080ff8080ff
-    80808080ff808080808080ff018080ffff04ff13ff018080ffff01ff04ff17ff
-    ff04ffff04ffff0146ffff04ff820bfdff808080ff1f808080ff0180ffff04ff
-    ff01ff02ffff03ff03ffff01ff0bffff0102ffff0bffff0182010480ffff0bff
-    ff0102ffff0bffff0102ffff0bffff0182010180ff0580ffff0bffff0102ffff
-    02ff02ffff04ff02ff078080ffff0bffff010180808080ffff01ff0bffff0182
-    01018080ff0180ffff01ff02ffff03ff05ffff01ff02ffff01ff30ffff02ff05
-    ffff04ff05ffff04ff1bff0f808080ff04ff0680ffff04ff09ff018080ffff01
-    0780ff018080808080ff018080
+    ffff04ffff02ff09ffff04ff09ffff04ff23ffff04ffff02ff5dffff04ff5dff
+    ff04ff8207e7ffff30ff8209e7ffff02ff15ffff04ff2dffff04ff23ffff04ff
+    ff02ff09ffff04ff09ff138080ffff04ff8215e7ff808080808080ff821de780
+    808080ff7380808080ffff04ffff02ff15ffff04ff2dffff04ff2bffff04ffff
+    0bffff0101ff2b80ffff04ff47ffff04ff81a7ffff04ffff02ff15ffff04ff2d
+    ffff04ff5bffff04ffff0bffff0101ff5b80ffff04ffff0bffff0101ff820167
+    80ffff04ff8202e7ffff04ff81bbff8080808080808080ff8080808080808080
+    ff808080808080ffff02ff09ffff04ff09ffff04ffff02ff09ffff04ff09ffff
+    04ff2fffff04ff8205fbff8217fb80808080ffff04ffff04ff02ffff04ffff01
+    01ffff04ffff04ff02ff8080ff80808080ff808080808080ff018080ffff04ff
+    ff02ff0affff04ff16ffff04ff81bdffff04ffff02ff04ffff04ff04ffff04ff
+    8205fdffff0101808080ffff04ff82017dff808080808080ff018080ffff01ff
+    04ff17ffff04ffff04ffff0146ffff04ff820bfdff808080ff1f808080ff0180
+    ffff04ffff01ff02ffff03ff03ffff01ff0bffff0102ffff0bffff0182010480
+    ffff0bffff0102ffff0bffff0102ffff0bffff0182010180ff0580ffff0bffff
+    0102ffff02ff02ffff04ff02ff078080ffff0bffff010180808080ffff01ff0b
+    ffff018201018080ff0180ffff01ff02ffff03ff05ffff01ff30ffff02ff02ff
+    ff04ff02ffff04ff0dff07808080ff11ff1980ffff010780ff018080808080ff
+    018080
     "
 );
 
 pub const REWARD_DISTRIBUTOR_NFTS_FROM_DID_LOCKING_PUZZLE_HASH: TreeHash = TreeHash::new(hex!(
     "
-    7d513ecf5745baef359d5a28a6f869a2819307d84fae0cd14ac420c2d99648e1
+    2b39fa5f7dd59c3244dd406238a0d5f4a054d8ede2244d1dc7ee849a5859c416
     "
 ));
 
