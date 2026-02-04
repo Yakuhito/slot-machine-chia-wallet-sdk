@@ -281,7 +281,7 @@ impl XchandlesRegisterAction {
 
 #[cfg(test)]
 mod tests {
-    use clvmr::reduction::EvalErr;
+    use clvmr::{reduction::EvalErr, serde::node_to_bytes};
 
     use super::*;
 
@@ -319,6 +319,11 @@ mod tests {
                         handle,
                         num_periods,
                     })?;
+
+                    // todo: debug
+                    println!("puzzle: {:}", hex::encode(node_to_bytes(&ctx, puzzle)?));
+                    println!("solution: {:}", hex::encode(node_to_bytes(&ctx, solution)?));
+                    // todo: debug
 
                     let output = ctx.run(puzzle, solution)?;
                     let output = ctx.extract::<XchandlesFactorPricingOutput>(output)?;

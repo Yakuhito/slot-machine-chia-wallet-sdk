@@ -10,11 +10,10 @@ use crate::{
     Mod,
 };
 
-pub const CATALOG_REFUND_PUZZLE: [u8; 783] = hex!(
+pub const CATALOG_REFUND_PUZZLE: [u8; 751] = hex!(
     "
-    ff02ffff01ff02ffff01ff02ffff01ff04ff5fffff02ffff03ffff02ffff03ff
-    ff09ff8201dfff8202ff80ffff01ff02ffff03ffff09ff82015fff0580ffff01
-    ff0101ffff018080ff0180ffff018080ff0180ffff01ff02ffff01ff04ffff04
+    ff02ffff01ff02ffff01ff02ffff01ff04ff5fffff02ffff03ffff22ffff09ff
+    8201dfff8202ff80ffff09ff82015fff058080ffff01ff02ffff01ff04ffff04
     ffff0142ffff04ffff0112ffff04ff80ffff04ffff02ff57ffff04ff81b7ffff
     04ff5fffff04ffff0bffff0101ff0280ff8080808080ff8080808080ffff04ff
     ff02ff81f7ffff04ffff04ff57ff81b780ffff04ff5fff02808080ff058080ff
@@ -42,7 +41,7 @@ pub const CATALOG_REFUND_PUZZLE: [u8; 783] = hex!(
 
 pub const CATALOG_REFUND_PUZZLE_HASH: TreeHash = TreeHash::new(hex!(
     "
-    32ee4e502a03f0f9fda91e547c4ced0023bd86543aa1fcac15afbb31ecd52fc0
+    61a62089bada309b624437d7aa8b5112f077c10a82e48968d93504b7b69bed6f
     "
 ));
 
