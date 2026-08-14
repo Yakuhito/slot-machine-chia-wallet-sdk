@@ -39,7 +39,7 @@ pub struct XchandlesFactorPricingPuzzleArgs {
 }
 
 impl XchandlesFactorPricingPuzzleArgs {
-    /// Canonical XCHandles Handle grammar: 3–63 lowercase ASCII letters and digits.
+    /// Canonical `XCHandles` handle grammar: 3-63 lowercase ASCII letters and digits.
     pub fn is_valid_handle(handle: &str) -> bool {
         let len = handle.len();
         (3..=63).contains(&len)

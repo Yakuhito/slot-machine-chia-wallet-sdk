@@ -398,6 +398,14 @@ mod tests {
 
     #[test]
     fn test_factor_pricing_puzzle() -> Result<(), DriverError> {
+        const LONG_PREMINE_HANDLES: &[&str] = &[
+            "ashorttermmindgetsinthewayofalongtermgrind",
+            "bigbouncingthicctwerkingthunderclappingbadonkabooty",
+            "bigfathonkingjigglymommymilkerboobies",
+            "rolexislandpermutoplatinumlamboempirexrp404inu",
+            "thankstopawketforprovidingthebestchiasdk",
+        ];
+
         let mut ctx = SpendContext::new();
         let base_price = 1; // puzzle will only spit out factors
         let registration_period = 366 * 24 * 60 * 60; // one year
@@ -467,13 +475,6 @@ mod tests {
         }
 
         // Published Premine handles longer than 31 must price through the executable path.
-        const LONG_PREMINE_HANDLES: &[&str] = &[
-            "ashorttermmindgetsinthewayofalongtermgrind",
-            "bigbouncingthicctwerkingthunderclappingbadonkabooty",
-            "bigfathonkingjigglymommymilkerboobies",
-            "rolexislandpermutoplatinumlamboempirexrp404inu",
-            "thankstopawketforprovidingthebestchiasdk",
-        ];
         for handle in LONG_PREMINE_HANDLES {
             assert!(
                 XchandlesFactorPricingPuzzleArgs::is_valid_handle(handle),

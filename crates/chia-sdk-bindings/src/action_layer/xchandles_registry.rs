@@ -52,21 +52,21 @@ pub fn singleton_struct_hash(launcher_id: Bytes32) -> Result<Bytes32> {
     Ok(SingletonStruct::new(launcher_id).tree_hash().into())
 }
 
-/// XCHandles register-owner received-message bytes for a precommit puzzle hash.
+/// `XCHandles` register-owner received-message bytes for a precommit puzzle hash.
 pub fn xchandles_register_owner_message(precommit_puzzle_hash: Bytes32) -> Result<Bytes> {
     Ok(Bytes::new(
         XchandlesRegistryReceivedMessagePrefix::register_owner(precommit_puzzle_hash),
     ))
 }
 
-/// XCHandles expire-owner received-message bytes for a precommit puzzle hash.
+/// `XCHandles` expire-owner received-message bytes for a precommit puzzle hash.
 pub fn xchandles_expire_owner_message(precommit_puzzle_hash: Bytes32) -> Result<Bytes> {
     Ok(Bytes::new(
         XchandlesRegistryReceivedMessagePrefix::expire_owner(precommit_puzzle_hash),
     ))
 }
 
-/// Predict the eve blank Handle NFT coin id (nil metadata, AnyMetadataUpdater, royalty).
+/// Predict the eve blank Handle NFT coin id (nil metadata, `AnyMetadataUpdater`, royalty).
 pub fn predict_blank_handle_nft_coin_id(
     launcher_id: Bytes32,
     synthetic_public_key: PublicKey,
@@ -93,7 +93,7 @@ pub fn predict_blank_handle_nft_coin_id(
 
 /// Build the constrained registration state-scheduler delegated puzzle hash.
 ///
-/// Inner conditions are create_coin(p2,1,hint) + update_nft_metadata + assert_seconds_absolute,
+/// Inner conditions are `create_coin(p2, 1, hint)` + `update_nft_metadata` + `assert_seconds_absolute`,
 /// wrapped in the reusable state-scheduler layer with the register/expire owner message.
 #[allow(clippy::too_many_arguments)]
 pub fn xchandles_registration_delegated_puzzle_hash(
