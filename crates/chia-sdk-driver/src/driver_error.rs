@@ -28,6 +28,9 @@ pub enum DriverError {
     #[error("invalid mod hash")]
     InvalidModHash,
 
+    #[error("metadata updater puzzle hash mismatch")]
+    MetadataUpdaterPuzzleHashMismatch,
+
     #[error("non-standard inner puzzle layer")]
     NonStandardLayer,
 
@@ -51,6 +54,9 @@ pub enum DriverError {
 
     #[error("expected even oracle fee, but it was odd")]
     OddOracleFee,
+
+    #[error("fee overflow")]
+    FeeOverflow,
 
     #[error("custom driver error: {0}")]
     Custom(String),
