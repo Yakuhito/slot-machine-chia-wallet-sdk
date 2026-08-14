@@ -40,26 +40,21 @@ pub struct CatalogRegistryConstants {
 
 impl CatalogRegistryConstants {
     pub fn get(testnet11: bool) -> Self {
-        if testnet11 {
-            return CatalogRegistryConstants {
-                launcher_id: Bytes32::from(hex!(
-                    "0b705afb0d848794311970de0cb98722468fad6c8f687337735ab9e5286d7704"
-                )),
-                royalty_address: Bytes32::from(hex!(
-                    "b3aea098428b2b5e6d57cf3bff6ee82e3950dec338b17df6d8ee20944787def5"
-                )),
-                royalty_basis_points: 100,
-                precommit_payout_puzzle_hash: Bytes32::from(hex!(
-                    "b3aea098428b2b5e6d57cf3bff6ee82e3950dec338b17df6d8ee20944787def5"
-                )),
-                relative_block_height: 4,
-                price_singleton_launcher_id: Bytes32::from(hex!(
-                    "45dff01375d9bd681d36a3a186ab3d0c86eb809d7f85fff950f0b37f068ec664"
-                )),
-            };
+        // Launcher IDs stay unset until a timestamp-based CATalog deployment exists.
+        // Royalty / relative-height defaults remain usable for a fresh launch.
+        let _ = testnet11;
+        CatalogRegistryConstants {
+            launcher_id: Bytes32::default(),
+            royalty_address: Bytes32::from(hex!(
+                "764e9d674d2fa441f0f6f8fc5e749a17dde345ebe4a33536afd3ef417a3f8c90"
+            )),
+            royalty_basis_points: 100,
+            precommit_payout_puzzle_hash: Bytes32::from(hex!(
+                "764e9d674d2fa441f0f6f8fc5e749a17dde345ebe4a33536afd3ef417a3f8c90"
+            )),
+            relative_block_height: 4,
+            price_singleton_launcher_id: Bytes32::default(),
         }
-
-        todo!("oops - catalog constants for mainnet are not yet available");
     }
 
     pub fn with_price_singleton(mut self, price_singleton_launcher_id: Bytes32) -> Self {
@@ -70,6 +65,21 @@ impl CatalogRegistryConstants {
     pub fn with_launcher_id(mut self, launcher_id: Bytes32) -> Self {
         self.launcher_id = launcher_id;
         self
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn catalog_constants_have_no_deployed_scheduler_ids() {
+        for testnet11 in [false, true] {
+            let constants = CatalogRegistryConstants::get(testnet11);
+            assert_eq!(constants.launcher_id, Bytes32::default());
+            assert_eq!(constants.price_singleton_launcher_id, Bytes32::default());
+            assert_eq!(constants.relative_block_height, 4);
+        }
     }
 }
 
